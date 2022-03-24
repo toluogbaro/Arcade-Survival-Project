@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MapGenerator : MonoBehaviour
 {
     public enum DrawMode { NoiseMap, ColourMap, Mesh, FalloffMap};
     public DrawMode drawMode;
     [Range(0,241)]
-    public int mapChunkSize = 241;
+    public const int mapChunkSize = 241;
     [Range(0, 6)]
     public int levelOfDetail;
     public float noiseScale;
@@ -32,15 +33,33 @@ public class MapGenerator : MonoBehaviour
 
     float[,] fallofMap;
 
+    public GameObject input; 
+
     private void Awake()
     {
         fallofMap = FalloffGenerator.GenerateFalloffMap(mapChunkSize);
     }
 
+    public void Start()
+    {
+        GenerateMap();
+    }
+
+    public void GenerateSeed()
+    {
+        int.TryParse(input.GetComponent<InputField>().text, out int n);
+
+        seed = n;
+
+        GenerateMap();
+    }
+
     public void GenerateMap()
     {
-
-        seed = Random.Range(-100000, 100000);
+        if(seed == 0)
+        {
+            seed = Random.Range(-100000, 100000);
+        }
 
         float[,] noiseMap = Noise.GenerateNoiseMap(mapChunkSize, mapChunkSize, seed, noiseScale, ocataves, persistance, lacunarity, offset);
 
