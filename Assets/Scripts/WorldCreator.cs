@@ -4,22 +4,13 @@ using UnityEngine;
 
 public class WorldCreator : MonoBehaviour
 {
-    int chunkSize;
+    public int chunkSize;
     bool gameStarted;
 
     void Start()
     {
-        chunkSize = MapGenerator.mapChunkSize - 1;
+        new TerrainChunk(chunkSize);
 
-        if (gameStarted == false)
-        {
-            
-        } else
-        {
-            new TerrainChunk(chunkSize);
-            gameStarted = true;
-        }
-            
     }
 
     public class TerrainChunk
@@ -34,7 +25,7 @@ public class WorldCreator : MonoBehaviour
 
             meshObject = GameObject.CreatePrimitive(PrimitiveType.Plane);
             meshObject.transform.position = positionV3;
-            meshObject.transform.localScale = Vector3.one * size / 10f;
+            meshObject.transform.localScale = Vector3.one * size;
 
         }
 
