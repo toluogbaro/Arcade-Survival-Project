@@ -22,8 +22,6 @@ public class MapGenerator : MonoBehaviour
     public Vector2 offset;
     public float meshHeightMultipler;
     public AnimationCurve meshHeightCurve;
-
-
     
     
 
@@ -44,7 +42,7 @@ public class MapGenerator : MonoBehaviour
 
     public void Start()
     {
-        GenerateMapData();
+        GenerateMap();
     }
 
     public void GenerateSeed()
@@ -53,33 +51,10 @@ public class MapGenerator : MonoBehaviour
 
         seed = n;
 
-        GenerateMapData();
+        GenerateMap();
     }
 
-    public void DrawMapInEditor ()
-    {
-        MapData mapData = GenerateMapData();
-        MapDisplay display = FindObjectOfType<MapDisplay>();
-        if (drawMode == DrawMode.NoiseMap)
-        {
-
-            display.DrawTexture(TextureGenerator.TextureFromHeightMap(mapData.heightMap));
-        }
-        else if (drawMode == DrawMode.ColourMap)
-        {
-            display.DrawTexture(TextureGenerator.TextureFromColourMap(mapData.colourMap, mapChunkSize, mapChunkSize));
-        }
-        else if (drawMode == DrawMode.Mesh)
-        {
-            display.DrawMesh(MeshGenerator.GenerateTerrainMesh(mapData.heightMap, meshHeightMultipler, meshHeightCurve, levelOfDetail), TextureGenerator.TextureFromColourMap(mapData.colourMap, mapChunkSize, mapChunkSize));
-        }
-        else if (drawMode == DrawMode.FalloffMap)
-        {
-            display.DrawTexture(TextureGenerator.TextureFromHeightMap(FalloffGenerator.GenerateFalloffMap(mapChunkSize)));
-        }
-    }
-
-    MapData GenerateMapData()
+    public void GenerateMap()
     {
         if(seed == 0)
         {
@@ -111,9 +86,23 @@ public class MapGenerator : MonoBehaviour
             }
         }
 
-        return new MapData(noiseMap, colourMap);
+        MapDisplay display = FindObjectOfType<MapDisplay>();
+        if (drawMode == DrawMode.NoiseMap)
+        {
 
-        
+            display.DrawTexture(TextureGenerator.TextureFromHeightMap(noiseMap));
+        }
+        else if (drawMode == DrawMode.ColourMap)
+        {
+            display.DrawTexture(TextureGenerator.TextureFromColourMap(colourMap, mapChunkSize, mapChunkSize));
+        }
+        else if (drawMode == DrawMode.Mesh)
+        {
+            display.DrawMesh(MeshGenerator.GenerateTerrainMesh(noiseMap, meshHeightMultipler, meshHeightCurve, levelOfDetail), TextureGenerator.TextureFromColourMap(colourMap, mapChunkSize, mapChunkSize));
+        } else if (drawMode == DrawMode.FalloffMap)
+        {
+            display.DrawTexture(TextureGenerator.TextureFromHeightMap(FalloffGenerator.GenerateFalloffMap(mapChunkSize)));
+        }
 
     }
     void OnValidate()
@@ -138,17 +127,4 @@ public struct TerrainType
     public float height;
     public Color colour;
 
-}
-
-
-public struct MapData
-{
-    public float[,] heightMap;
-    public Color[] colourMap;
-
-    public MapData(float[,] heightMap, Color[] colourMap)
-    {
-        this.heightMap = heightMap;
-        this.colourMap = colourMap;
-    }
 }
