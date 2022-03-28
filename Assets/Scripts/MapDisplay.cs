@@ -6,19 +6,29 @@ public class MapDisplay : MonoBehaviour
 {
     public Renderer textureRender;
     public MeshFilter meshFilter;
-    public MeshRenderer meshrenderer;
-    
+    public MeshRenderer meshRenderer;
+    GameObject meshObject;
+    public Material material;
 
+    public float chunkSize;
     public void DrawTexture(Texture2D texture)
     {
         textureRender.sharedMaterial.mainTexture = texture;
         textureRender.transform.localScale = new Vector3(texture.width, 1, texture.height);
     }
 
-    public void DrawMesh(MeshData meshData, Texture2D texture)
+    public void DrawMesh(MeshData meshData, Material material)
     {
-        meshFilter.sharedMesh = meshData.CreateMesh();
-        meshrenderer.sharedMaterial.mainTexture = texture;
-        
+        Vector3 positionV3 = new Vector3(0, 0, 0);
+        chunkSize = MapGenerator.mapChunkSize;
+        meshObject = new GameObject("Terrain Chunk");
+        meshFilter = meshObject.AddComponent<MeshFilter>();
+        meshRenderer = meshObject.AddComponent<MeshRenderer>();
+        meshRenderer.material = material;
+        meshFilter.mesh = meshData.CreateMesh();
+        Debug.Log(meshFilter.mesh);
+        meshObject.transform.position = positionV3;
+        meshObject.transform.localScale = Vector3.one * chunkSize / 10;
+
     }
 }

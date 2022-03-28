@@ -21,11 +21,9 @@ public class WorldCreator : MonoBehaviour
         public TerrainChunk(int size)
         {
             
-            Vector3 positionV3 = new Vector3(0, 0, 0);
+            
 
-            meshObject = GameObject.CreatePrimitive(PrimitiveType.Plane);
-            meshObject.transform.position = positionV3;
-            meshObject.transform.localScale = Vector3.one * size;
+            
 
         }
 
