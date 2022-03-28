@@ -9,6 +9,7 @@ public class MapDisplay : MonoBehaviour
     public MeshRenderer meshRenderer;
     GameObject meshObject;
     public Material material;
+    MeshCollider meshCollider;
 
     public float chunkSize;
     public void DrawTexture(Texture2D texture)
@@ -25,7 +26,11 @@ public class MapDisplay : MonoBehaviour
         meshFilter = meshObject.AddComponent<MeshFilter>();
         meshRenderer = meshObject.AddComponent<MeshRenderer>();
         meshRenderer.material = material;
+        meshCollider = meshObject.AddComponent<MeshCollider>();
+        
         meshFilter.mesh = meshData.CreateMesh();
+        meshCollider.sharedMesh = meshFilter.mesh;
+         
         Debug.Log(meshFilter.mesh);
         meshObject.transform.position = positionV3;
         meshObject.transform.localScale = Vector3.one * chunkSize / 10;
