@@ -134,8 +134,20 @@ public class MapGenerator : MonoBehaviour
             }
         }
 
-        MapDisplay display = FindObjectOfType<MapDisplay>();
-        display.DrawMesh(MeshGenerator.GenerateTerrainMesh(noiseMap, meshHeightMultipler, meshHeightCurve, levelOfDetail), material);
+        if (GameObject.Find("Terrain Chunk"))
+        {
+            var terrain = GameObject.Find("Terrain Chunk");
+            Destroy(terrain);
+            
+            MapDisplay display = FindObjectOfType<MapDisplay>();
+            display.DrawMesh(MeshGenerator.GenerateTerrainMesh(noiseMap, meshHeightMultipler, meshHeightCurve, levelOfDetail), material);
+        }else
+        {
+            MapDisplay display = FindObjectOfType<MapDisplay>();
+            display.DrawMesh(MeshGenerator.GenerateTerrainMesh(noiseMap, meshHeightMultipler, meshHeightCurve, levelOfDetail), material);
+        }
+
+        
         
     }
     void OnValidate()
