@@ -458,6 +458,7 @@ GameObject:
   - component: {fileID: 8792188257865506899}
   - component: {fileID: 8792188257865506898}
   - component: {fileID: 8792188257865506897}
+  - component: {fileID: 4144560416018785950}
   m_Layer: 0
   m_Name: Main Camera (6)
   m_TagString: MainCamera
@@ -672,6 +673,20 @@ MonoBehaviour:
       enableFptlForForwardOpaque: 0
       enableBigTilePrepass: 0
       isFptlEnabled: 0
+--- !u!114 &4144560416018785950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8792188257865506900}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50b39c41c17d13744815c993d6a63ad9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mouseSensitivity: 100
+  playerBody: {fileID: 0}
 --- !u!1 &8792188257940105427
 GameObject:
   m_ObjectHideFlags: 0
@@ -893,6 +908,7 @@ GameObject:
   - component: {fileID: 8792188258205516487}
   - component: {fileID: 8792188258205516485}
   - component: {fileID: 8792188258205516484}
+  - component: {fileID: 5200815639241020579}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -982,6 +998,27 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   isGrounded: 0
+--- !u!114 &5200815639241020579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8792188258205516489}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 832d5a1b27b29154794de8afa3e96c30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 8792188258205516487}
+  speed: 12
+  gravity: -10
+  jumpHeight: 2
+  groundCheck: {fileID: 8792188258205516486}
+  groundDistance: 0.4
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &8792188258235754209
 GameObject:
   m_ObjectHideFlags: 0
