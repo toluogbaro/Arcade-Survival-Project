@@ -37,56 +37,60 @@ public class SCR_CameraMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        var targetOrientation = Quaternion.Euler(targetDirection);
-        var targetCharacterOrientation = Quaternion.Euler(targetCharacterDirection);
-
-        var mouseDelta = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
-        mouseDelta = Vector2.Scale(mouseDelta, new Vector2(sensitivity.x * smoothing.x, sensitivity.y * smoothing.y));
-
-        // Interpolate mouse movement over time to apply smoothing delta.
-        _smoothMouse.x = Mathf.Lerp(_smoothMouse.x, mouseDelta.x, 1f / smoothing.x);
-        _smoothMouse.y = Mathf.Lerp(_smoothMouse.y, mouseDelta.y, 1f / smoothing.y);
-
-        //_mouseAbsolute += _smoothMouse;
-
-        if (yInvert)
+        if(!cantMoveCamera)
         {
-            _mouseAbsolute.y -= _smoothMouse.y;
-        }
-        else
-        {
-            _mouseAbsolute.y += _smoothMouse.y;
-        }
+            var targetOrientation = Quaternion.Euler(targetDirection);
+            var targetCharacterOrientation = Quaternion.Euler(targetCharacterDirection);
 
-        if (xInvert)
-        {
-            _mouseAbsolute.x -= _smoothMouse.x;
+            var mouseDelta = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
+            mouseDelta = Vector2.Scale(mouseDelta, new Vector2(sensitivity.x * smoothing.x, sensitivity.y * smoothing.y));
+
+            // Interpolate mouse movement over time to apply smoothing delta.
+            _smoothMouse.x = Mathf.Lerp(_smoothMouse.x, mouseDelta.x, 1f / smoothing.x);
+            _smoothMouse.y = Mathf.Lerp(_smoothMouse.y, mouseDelta.y, 1f / smoothing.y);
+
+            //_mouseAbsolute += _smoothMouse;
+
+            if (yInvert)
+            {
+                _mouseAbsolute.y -= _smoothMouse.y;
+            }
+            else
+            {
+                _mouseAbsolute.y += _smoothMouse.y;
+            }
+
+            if (xInvert)
+            {
+                _mouseAbsolute.x -= _smoothMouse.x;
+            }
+            else
+            {
+                _mouseAbsolute.x += _smoothMouse.x;
+            }
+
+
+            if (clampInDegrees.x < 360)
+                _mouseAbsolute.x = Mathf.Clamp(_mouseAbsolute.x, -clampInDegrees.x * 0.5f, clampInDegrees.x * 0.5f);
+
+            if (clampInDegrees.y < 360)
+                _mouseAbsolute.y = Mathf.Clamp(_mouseAbsolute.y, -clampInDegrees.y * 0.5f, clampInDegrees.y * 0.5f);
+
+            transform.localRotation = Quaternion.AngleAxis(-_mouseAbsolute.y, targetOrientation * Vector3.right) * targetOrientation;
+
+            // If there's a character body that acts as a parent to the camera
+            if (characterBody)
+            {
+                var yRotation = Quaternion.AngleAxis(_mouseAbsolute.x, Vector3.up);
+                characterBody.transform.localRotation = yRotation * targetCharacterOrientation;
+                transform.LookAt(characterBody.transform);
+            }
+            else
+            {
+                var yRotation = Quaternion.AngleAxis(_mouseAbsolute.x, transform.InverseTransformDirection(Vector3.up));
+                transform.localRotation *= yRotation;
+            }
         }
-        else
-        {
-            _mouseAbsolute.x += _smoothMouse.x;
-        }
-
-
-        if (clampInDegrees.x < 360)
-            _mouseAbsolute.x = Mathf.Clamp(_mouseAbsolute.x, -clampInDegrees.x * 0.5f, clampInDegrees.x * 0.5f);
-
-        if (clampInDegrees.y < 360)
-            _mouseAbsolute.y = Mathf.Clamp(_mouseAbsolute.y, -clampInDegrees.y * 0.5f, clampInDegrees.y * 0.5f);
-
-        transform.localRotation = Quaternion.AngleAxis(-_mouseAbsolute.y, targetOrientation * Vector3.right) * targetOrientation;
-
-        // If there's a character body that acts as a parent to the camera
-        if (characterBody)
-        {
-            var yRotation = Quaternion.AngleAxis(_mouseAbsolute.x, Vector3.up);
-            characterBody.transform.localRotation = yRotation * targetCharacterOrientation;
-            transform.LookAt(characterBody.transform);
-        }
-        else
-        {
-            var yRotation = Quaternion.AngleAxis(_mouseAbsolute.x, transform.InverseTransformDirection(Vector3.up));
-            transform.localRotation *= yRotation;
-        }
+        
     }
 }

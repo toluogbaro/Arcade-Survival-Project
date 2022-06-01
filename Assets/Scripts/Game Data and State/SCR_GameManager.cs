@@ -38,6 +38,7 @@ public class SCR_GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Time.timeScale = 1f;
         _menuOpen = false;
+        SCR_CameraMovement.cantMoveCamera = false;
     }
 
     public void SettingsMenu()
@@ -46,6 +47,7 @@ public class SCR_GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Time.timeScale = 0f;
         _menuOpen = true;
+        SCR_CameraMovement.cantMoveCamera = true;
     }
 
     public void PopupUI()
@@ -54,6 +56,7 @@ public class SCR_GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Time.timeScale = 0f;
         _menuOpen = true;
+        SCR_CameraMovement.cantMoveCamera = true;
     }
 
     public void Inventory()
@@ -62,6 +65,7 @@ public class SCR_GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Confined;
         Time.timeScale = 1f;
         _menuOpen = true;
+        SCR_CameraMovement.cantMoveCamera = true;
     }
 
     public void PauseMenu()
@@ -70,6 +74,7 @@ public class SCR_GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Time.timeScale = 0f;
         _menuOpen = true;
+        SCR_CameraMovement.cantMoveCamera = true;
     }
 
     public void SetState(GameState gameState)
