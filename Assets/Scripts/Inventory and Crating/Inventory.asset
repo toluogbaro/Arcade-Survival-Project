@@ -16,3 +16,5 @@ MonoBehaviour:
   savePath: 
   Container: []
   hasItem: 0
+  CraftDatabase:
+  - {fileID: 11400000, guid: 34e32ed4952267f43aee613911dde5d7, type: 2}

@@ -9,6 +9,7 @@ public enum ItemType
     Health,
     SpecialHealth,
     Food,
+    Weapon,
     Default
 }
 

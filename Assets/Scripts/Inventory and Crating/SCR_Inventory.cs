@@ -19,6 +19,8 @@ public class SCR_Inventory : ScriptableObject, ISerializationCallbackReceiver
     [HideInInspector]
     public bool hasItem;
 
+    public SCR_CraftingItem[] CraftDatabase;
+
     private void OnEnable()
     {
         //#if UNITY_EDITOR
