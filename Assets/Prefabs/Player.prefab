@@ -3549,19 +3549,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41e61540ee9f1ea4ab16d77739546122, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  capsule: {fileID: 8792188257843702978}
+  mainCam: {fileID: 8792188257865506900}
   walkSpeed: 8
   jumpWalkSpeed: 5
   sprintSpeed: 15
-  gravity: -10
+  gravity: -40
   jumpHeight: 2
   airTime: 0.1
+  dodgeDistance: 25
+  dodgeTime: 0.25
   groundCheck: {fileID: 8792188258205516486}
   groundDistance: 1.2
   groundMask:
     serializedVersion: 2
     m_Bits: 8
   isGrounded: 0
-  currentMovementState: 0
+  currentMovementState: 1
 --- !u!114 &5200815639241020579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3636,6 +3640,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  isInvincible: 0
   currentStamina: 100
   maxStamina: 100
   staminaFill: {fileID: 607788655150327725}

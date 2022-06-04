@@ -24,7 +24,7 @@ public class SCR_PlayerValues : MonoBehaviour
     public GameObject cameraToShake;
     public GameObject player;
     public AnimationCurve animationCurve;
-    private bool isInvincible;
+    [HideInInspector] public bool isInvincible;
 
     //postprocessing effects
     private FilmGrain filmGrain;
@@ -120,15 +120,20 @@ public class SCR_PlayerValues : MonoBehaviour
             case Movement.MovementStates.Walk:
                 staminaCalculation = false;
                 StopTakeStamina();
-                motionBlur.intensity.Override(1f);
+                motionBlur.intensity.Override(0f);
                 break;
 
             case Movement.MovementStates.Sprint:
                 TakeStamina(10f);
                 motionBlur.intensity.Override(5f);
                 break;
-        
-        
+
+            case Movement.MovementStates.Dodge:
+                TakeStamina(75f);
+                motionBlur.intensity.Override(2f);
+                break;
+
+
         }
 
     }

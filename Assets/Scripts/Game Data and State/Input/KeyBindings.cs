@@ -6,7 +6,7 @@ using UnityEngine;
 public class KeyBindings : ScriptableObject
 {
 
-    public KeyCode Jump, Sprint, Inventory, Pause;
+    public KeyCode Jump, Sprint, Inventory, Pause, Dodge;
 
 
     public KeyCode CheckKey(string key)
@@ -25,6 +25,9 @@ public class KeyBindings : ScriptableObject
 
             case "Pause":
                 return Pause;
+
+            case "Dodge":
+                return Dodge;
 
             default:
                 return KeyCode.None;
