@@ -7,7 +7,7 @@ namespace Movement
 {
     public enum MovementStates { Jump, Walk, Crouch, Swim, Sprint };
 
-    [RequireComponent(typeof(CharacterController))]
+
     public class SCR_PlayerController : MonoBehaviour
     {
         CharacterController controller;
@@ -25,8 +25,9 @@ namespace Movement
 
         Vector3 velocity;
         public bool isGrounded;
-
-        MovementStates currentMovementState;
+        
+        public MovementStates currentMovementState;
+        public static bool cantMoveCharacter;
 
 
         public void Start()
@@ -37,9 +38,15 @@ namespace Movement
 
         public void Update()
         {
-            Walk();
 
-            Jump();
+            if (!cantMoveCharacter)
+                
+            {
+                Walk();
+                Jump();
+            }
+
+           
 
             
         }
@@ -55,7 +62,7 @@ namespace Movement
             //controller.Move(move * speed * Time.deltaTime);
             //else controller.Move(move * jumpWalkSpeed * Time.deltaTime);
 
-            if (InputManager._instance.GetKey("Sprint") && isGrounded) ChangeStates(MovementStates.Sprint);
+            if (InputManager._instance.GetKey("Sprint") && isGrounded && SCR_PlayerValues._instance.currentStamina > 0) ChangeStates(MovementStates.Sprint);
             else ChangeStates(MovementStates.Walk);
             
 

@@ -15,10 +15,18 @@ public class SCR_DayProgression : MonoBehaviour
     public Image dayNightIcon;
     public Sprite sunSprite, moonSprite;
     public Light directionalLight;
+    public Image playerMarker;
+    public Camera miniMapCam;
+    private GameObject player;
 
+    private void Start()
+    {
+        player = FindObjectOfType<Movement.SCR_PlayerController>().gameObject;
+    }
     public void Update()
     {
         CountDown();
+
     }
 
     public void CountDown()
@@ -77,7 +85,7 @@ public class SCR_DayProgression : MonoBehaviour
 
         StartCoroutine(UITools._instance.ScaledDeltaFadeText(dayNightText, false, 1.1f));
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.5f);
 
         dayNightIcon.sprite = moonSprite;
 
@@ -113,7 +121,7 @@ public class SCR_DayProgression : MonoBehaviour
 
         StartCoroutine(UITools._instance.ScaledDeltaFadeText(dayNightText, false, 1.1f));
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.5f);
 
         dayNightIcon.sprite = sunSprite;
 
@@ -128,6 +136,8 @@ public class SCR_DayProgression : MonoBehaviour
 
         yield return null;
     }
+
+
 
 
 }
