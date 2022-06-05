@@ -32,12 +32,13 @@ namespace Movement
         public MovementStates currentMovementState;
         public static bool cantMoveCharacter;
 
-
+        private SCR_PlayerWeapon playerWeapon;
         private bool canDodge;
 
         public void Start()
         {
             controller = GetComponent<CharacterController>();
+            playerWeapon = GetComponent<SCR_PlayerWeapon>();
             canDodge =true;
         }
 
@@ -150,6 +151,7 @@ namespace Movement
                 yield return null;
 
                 cantMoveCharacter = false;
+
             }
 
             SCR_PlayerValues._instance.isInvincible = false;

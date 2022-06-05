@@ -6,7 +6,7 @@ using UnityEngine;
 public class KeyBindings : ScriptableObject
 {
 
-    public KeyCode Jump, Sprint, Inventory, Pause, Dodge;
+    public KeyCode Jump, Sprint, Inventory, Pause, Dodge, LightAttack, HeavyAttack;
 
 
     public KeyCode CheckKey(string key)
@@ -28,6 +28,12 @@ public class KeyBindings : ScriptableObject
 
             case "Dodge":
                 return Dodge;
+
+            case "LightAttack":
+                return LightAttack;
+
+            case "HeavyAttack":
+                return HeavyAttack;
 
             default:
                 return KeyCode.None;
