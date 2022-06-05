@@ -17,3 +17,5 @@ MonoBehaviour:
   Inventory: 9
   Pause: 27
   Dodge: 306
+  LightAttack: 323
+  HeavyAttack: 324
