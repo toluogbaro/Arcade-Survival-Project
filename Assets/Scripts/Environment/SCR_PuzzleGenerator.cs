@@ -17,13 +17,13 @@ public class SCR_PuzzleGenerator : MonoBehaviour
     [SerializeField] private List<GameObject> tiles = new List<GameObject>();
 
     [Header("Puzzle Settings")]
+    public PuzzleMode puzzleMode;
     public Material debugBaseColor;
     public Material debugActiveColor;
     public Material debugFailedColor;
     public Material debugSolvedColor;
+    [SerializeField] private int failThreshhold = 3;
     [SerializeField] private List<int> puzzleSolution= new List<int>();
-    public List<int> puzzleAttempt = new List<int>();
-    private PuzzleState puzzleState;
 
 
     //Non-Serialized Variables
@@ -32,6 +32,9 @@ public class SCR_PuzzleGenerator : MonoBehaviour
     private float xOffset = 0f; //spawn offset for X axis
     private float zOffset = 0f; //spawn offset for Z axis
     private int tileCounter = 0;
+    public List<int> puzzleAttempt = new List<int>();
+    [HideInInspector] public PuzzleState puzzleState;
+    private int failCount = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -71,19 +74,64 @@ public class SCR_PuzzleGenerator : MonoBehaviour
         puzzleSolution = puzzleSolution.OrderBy(i => Guid.NewGuid()).ToList();
     }
 
-    public void CheckPuzzleState()
+    public void CheckPuzzleState(GameObject currentTile)
     {
         for (int i = 0; i < puzzleAttempt.Count; i++)
         {
+            //print("CYCLE");
             if (puzzleAttempt[i] == puzzleSolution[i])
             {
                 puzzleState = PuzzleState.OK;
+                currentTile.GetComponent<MeshRenderer>().material = debugActiveColor;
+                currentTile.GetComponent<SCR_PuzzleTile>().isCorrect = true;
+                if (puzzleAttempt.Last() == puzzleSolution.Last())
+                {
+                    failCount = 0;
+                }
+                //print("OK");
             }
             else
             {
-                puzzleAttempt = new List<int>();
                 puzzleState = PuzzleState.FAILED;
-                StartCoroutine(DebugPuzzleIndicator(debugFailedColor));
+
+                if(puzzleMode == PuzzleMode.RESET_ON_FAIL)
+                {
+                    puzzleAttempt = new List<int>();
+                    foreach (GameObject tile in tiles)
+                    {
+                        tile.GetComponent<SCR_PuzzleTile>().isCorrect = false;
+                    }
+                    StartCoroutine(DebugPuzzleIndicator(debugFailedColor));
+                    StartCoroutine(PuzzleSolvedCooldown());
+                }
+                else if (puzzleMode == PuzzleMode.NO_RESET)
+                {
+                    puzzleAttempt.Remove(puzzleAttempt.Last());
+                    currentTile.GetComponent<MeshRenderer>().material = debugFailedColor;
+                    currentTile.GetComponent<SCR_PuzzleTile>().isCorrect = false;
+                    //print("FAILED");
+                }
+                else if (puzzleMode == PuzzleMode.RESET_AFTER_X)
+                {
+                    if(failCount <= failThreshhold)
+                    {
+                        puzzleAttempt.Remove(puzzleAttempt.Last());
+                        currentTile.GetComponent<MeshRenderer>().material = debugFailedColor;
+                        currentTile.GetComponent<SCR_PuzzleTile>().isCorrect = false;
+                        if(puzzleAttempt.Count > 0) failCount++;
+                    }
+                    else
+                    {
+                        puzzleAttempt = new List<int>();
+                        StartCoroutine(DebugPuzzleIndicator(debugFailedColor));
+                        foreach (GameObject tile in tiles)
+                        {
+                            tile.GetComponent<SCR_PuzzleTile>().isCorrect = false;
+                        }
+                        failCount = 0;
+                    }
+                    //print("FAILED");
+                }
             }
         }
 
@@ -91,7 +139,12 @@ public class SCR_PuzzleGenerator : MonoBehaviour
             {
                 puzzleState = PuzzleState.SOLVED;
                 puzzleAttempt = new List<int>();
+                foreach (GameObject tile in tiles)
+                    {
+                        tile.GetComponent<SCR_PuzzleTile>().isCorrect = false;
+                    }
                 StartCoroutine(DebugPuzzleIndicator(debugSolvedColor));
+                StartCoroutine(PuzzleSolvedCooldown());
             }
     }
 
@@ -107,11 +160,25 @@ public class SCR_PuzzleGenerator : MonoBehaviour
             tile.GetComponent<MeshRenderer>().material = debugBaseColor;
         }
     }
+
+    private IEnumerator PuzzleSolvedCooldown()
+    {
+        yield return new WaitForSeconds(1f);
+        puzzleState = PuzzleState.NULL;
+    }
 }
 
 public enum PuzzleState
 {
+    NULL,
     OK,
     FAILED,
     SOLVED
+}
+
+public enum PuzzleMode
+{
+    RESET_ON_FAIL,
+    RESET_AFTER_X,
+    NO_RESET
 }
