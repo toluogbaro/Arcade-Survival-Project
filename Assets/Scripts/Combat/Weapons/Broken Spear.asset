@@ -14,11 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lightDamage: 2
   heavyDamage: 4
-  durability: 99974
+  durability: 100000
   startingDurability: 100000
   lightFireRate: 1
   heavyFireRate: 2
-  range: 1
+  range: 1.1
+  criticalHitChance: 20
   weaponType: 1
   description: A spear broken like no other, close to shattering and yet more comforting
     than a flimsy dagger

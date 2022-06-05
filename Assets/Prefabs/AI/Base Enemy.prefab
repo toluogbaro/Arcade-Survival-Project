@@ -115,6 +115,9 @@ MonoBehaviour:
   currentHealth: 100
   maxHealth: 100
   damageTextPrefab: {fileID: 3932635202044297480, guid: 03d5fbb2806b5e24ab5570a816b73853, type: 3}
+  normalDamageColour: {r: 0.9137255, g: 0.60784316, b: 0, a: 1}
+  critDamageColour: {r: 0.9137255, g: 0.21045801, b: 0, a: 1}
+  textShakeStrength: 0
 --- !u!1 &9106195775978213965
 GameObject:
   m_ObjectHideFlags: 0

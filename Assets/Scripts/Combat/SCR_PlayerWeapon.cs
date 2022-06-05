@@ -7,12 +7,12 @@ public class SCR_PlayerWeapon : MonoBehaviour
     public static SCR_PlayerWeapon _instance;
 
     public SCR_BaseWeapon currentWeapon;
-    public GameObject weaponHolder, currentWeaponPrefab, rightHand;
+    public GameObject weaponHolder, currentWeaponPrefab, rightHand, directionBearer;
     public LayerMask enemyMask;
     private float lastAttack = 0f;
     public Vector3 attackPositionOne, attackPositionTwo;
     public Vector3 attackRotationOne;
-    private bool hitDetection;
+    private bool hitDetection, hasHit;
     private Collider[] hitColliders;
     public void Awake()
     {
@@ -27,7 +27,7 @@ public class SCR_PlayerWeapon : MonoBehaviour
     public void Update()
     {
         if (Time.time > currentWeapon.lightFireRate + lastAttack && InputManager._instance.GetKeyDown("LightAttack") && currentWeapon != null) CalculateWeaponStatsLightAttack();
-        if (Input.GetKeyDown(KeyCode.R)) currentWeaponPrefab.transform.eulerAngles = new Vector3(0, 0, 0);
+        //if (Input.GetKeyDown(KeyCode.R)) currentWeaponPrefab.transform.eulerAngles = new Vector3(0, 0, 0);
 
         if(hitDetection) hitColliders = Physics.OverlapSphere(currentWeaponPrefab.GetComponent<SCR_WorldWeapon>().weaponTip.transform.position, currentWeapon.range, enemyMask);
     }
@@ -48,13 +48,14 @@ public class SCR_PlayerWeapon : MonoBehaviour
 
     IEnumerator PlaceHolderAttackDagger()
     {
-        
+
+        hasHit = false;
 
         Vector3 lastPos = rightHand.transform.localPosition;
-        Vector3 lastRot = rightHand.transform.eulerAngles;
+
 
         rightHand.LeanMoveLocal(attackPositionOne, 0.1f).setEaseInOutQuint();
-        rightHand.LeanRotate(attackRotationOne, 0.1f).setEaseInOutQuint();
+
 
         hitDetection = true;
 
@@ -62,17 +63,36 @@ public class SCR_PlayerWeapon : MonoBehaviour
 
         rightHand.LeanMoveLocal(attackPositionTwo, 0.25f).setEaseInOutQuint();
 
-        foreach (Collider hitCollider in hitColliders)
+        if(!hasHit)
+
         {
-            Debug.Log("hit");
-            hitCollider.gameObject.GetComponent<SCR_EnemyHealth>().TakeDamage(currentWeapon.lightDamage);
-            currentWeapon.durability -= 1;
+            foreach (Collider hitCollider in hitColliders)
+            {
+                Debug.Log("hit");
+                hitCollider.gameObject.GetComponent<SCR_EnemyHealth>().TakeDamage(currentWeapon.lightDamage);
+                currentWeapon.durability -= 1;
+            }
+            hasHit = true;
         }
+        
 
         yield return new WaitForSeconds(0.25f);
 
+        if (!hasHit)
+
+        {
+            foreach (Collider hitCollider in hitColliders)
+            {
+                Debug.Log("hit");
+                hitCollider.gameObject.GetComponent<SCR_EnemyHealth>().TakeDamage(currentWeapon.lightDamage);
+                currentWeapon.durability -= 1;
+            }
+
+            hasHit = true;
+        }
+
         rightHand.LeanMoveLocal(lastPos, 0.25f).setEaseInOutQuint();
-        rightHand.LeanRotate(new Vector3(0, 0, 0), 0.25f).setEaseInOutQuint();
+
 
         hitDetection = false;
 

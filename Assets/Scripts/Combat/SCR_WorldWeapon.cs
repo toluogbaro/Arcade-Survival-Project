@@ -22,18 +22,22 @@ public class SCR_WorldWeapon : MonoBehaviour
             {
                 Destroy(playerWeapon.currentWeaponPrefab);
                 playerWeapon.currentWeapon = weapon;
-                playerWeapon.currentWeaponPrefab = Instantiate(weapon.weaponPrefab, playerWeapon.weaponHolder.transform.position, Quaternion.identity);
+                playerWeapon.currentWeaponPrefab = Instantiate(weapon.weaponPrefab, playerWeapon.weaponHolder.transform.localPosition, Quaternion.identity);
                 playerWeapon.currentWeaponPrefab.GetComponent<BoxCollider>().enabled = false;
-                playerWeapon.currentWeaponPrefab.transform.SetParent(playerWeapon.weaponHolder.transform, true);
+                playerWeapon.transform.eulerAngles = Vector3.zero;
+                playerWeapon.currentWeaponPrefab.transform.SetParent(playerWeapon.weaponHolder.transform);
+                playerWeapon.currentWeaponPrefab.transform.localPosition = Vector3.zero;
                 Destroy(gameObject);
 
             }
             else
             {
                 playerWeapon.currentWeapon = weapon;
-                playerWeapon.currentWeaponPrefab = Instantiate(weapon.weaponPrefab, playerWeapon.weaponHolder.transform.position, Quaternion.identity);
+                playerWeapon.currentWeaponPrefab = Instantiate(weapon.weaponPrefab, Vector3.zero, Quaternion.identity);
                 playerWeapon.currentWeaponPrefab.GetComponent<BoxCollider>().enabled = false;
-                playerWeapon.currentWeaponPrefab.transform.SetParent(playerWeapon.weaponHolder.transform, true);
+                playerWeapon.transform.eulerAngles = Vector3.zero;
+                playerWeapon.currentWeaponPrefab.transform.SetParent(playerWeapon.weaponHolder.transform);
+                //playerWeapon.currentWeaponPrefab.transform.position = Vector3.zero;
                 Destroy(gameObject);
             }
         }

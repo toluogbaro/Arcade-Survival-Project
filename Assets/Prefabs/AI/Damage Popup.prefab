@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3771c5d3522b8de4cbc720a051a60e6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shakePos: {x: 0, y: 0, z: 10}
+  shakePos: {x: 0, y: 0, z: 45}
   isText: 0
   changeColour: {r: 0, g: 0, b: 0, a: 0}
   originalColour: {r: 0, g: 0, b: 0, a: 0}

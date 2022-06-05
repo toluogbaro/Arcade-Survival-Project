@@ -12,6 +12,7 @@ public class SCR_BaseWeapon : ScriptableObject
     public float lightFireRate;
     public float heavyFireRate;
     public float range;
+    public int criticalHitChance;
     public WeaponType weaponType;
     [TextArea(15, 20)]
     public string description;
