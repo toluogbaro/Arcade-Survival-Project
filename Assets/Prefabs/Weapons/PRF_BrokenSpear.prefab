@@ -141,7 +141,7 @@ GameObject:
   - component: {fileID: 27231178659318495}
   - component: {fileID: 4759593267332146025}
   m_Layer: 0
-  m_Name: Broken Spear
+  m_Name: PRF_BrokenSpear
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

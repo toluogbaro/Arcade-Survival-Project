@@ -688,7 +688,7 @@ GameObject:
   - component: {fileID: 4858410845471621668}
   - component: {fileID: 2778297953880019399}
   m_Layer: 0
-  m_Name: Pause Menu Holder
+  m_Name: PRF_PauseMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -10,6 +10,7 @@ public class SCR_Wheel : MonoBehaviour, IPointerEnterHandler,  IPointerClickHand
     public int itemID;
     public GameObject displayImage;
     public Image hoverImage;
+    
     public void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.button == PointerEventData.InputButton.Right)
@@ -17,6 +18,7 @@ public class SCR_Wheel : MonoBehaviour, IPointerEnterHandler,  IPointerClickHand
             StartCoroutine(UITools._instance.FastImageFade(hoverImage, true, 1.1f, 0.4f));
             SCR_WeaponWheel._instance.AddToCraftList(item);
             SCR_WeaponWheel._instance.potentialItemsToDiscard.Add(displayImage);
+            
         }
     }
 

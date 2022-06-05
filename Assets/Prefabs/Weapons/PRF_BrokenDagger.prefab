@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 2767926706220429596}
   - component: {fileID: 427972325394986679}
   m_Layer: 0
-  m_Name: Borken Dagger
+  m_Name: PRF_BrokenDagger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

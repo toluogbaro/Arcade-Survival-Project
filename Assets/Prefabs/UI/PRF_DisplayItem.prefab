@@ -162,7 +162,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3875746055119551405}
   m_Layer: 0
-  m_Name: Display Item
+  m_Name: PRF_DisplayItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
