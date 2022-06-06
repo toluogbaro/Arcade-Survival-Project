@@ -36,6 +36,8 @@ public class UITools : MonoBehaviour
                 yield return null;
             }
         }
+
+        //Fade an image in unscaled time - so while the game is paused and unpaused
     }
 
     public IEnumerator DeltaFadeImage(Image fadeImage, bool fadeAway, float fadeAmount)
@@ -58,6 +60,8 @@ public class UITools : MonoBehaviour
                 yield return null;
             }
         }
+
+        //fade an image in scaled time - only when the game is unpaused
     }
 
     public IEnumerator FastImageFade(Image fadeImage, bool fadeAway, float fadeAmount, float speed)
@@ -80,6 +84,8 @@ public class UITools : MonoBehaviour
                 yield return null;
             }
         }
+
+        //fade an image in float time - faster than unscaled or scaled
     }
 
     public IEnumerator ImageGlowOnce(Image fadeImage)
@@ -93,6 +99,8 @@ public class UITools : MonoBehaviour
         StartCoroutine(UnscaledDeltaFadeImage(fadeImage, false, 1.1f));
 
         yield return null;
+
+        //fade an image quickly then unfade
     }
 
     #endregion

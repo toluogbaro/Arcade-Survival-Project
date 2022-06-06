@@ -25,9 +25,9 @@ public class SCR_Building : MonoBehaviour
 
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.G)) GenerateTiles(xPos, zPos, padding, tileSize, transform);
+        //if (Input.GetKeyDown(KeyCode.G)) GenerateTiles(xPos, zPos, padding, tileSize, transform);
 
-        if (Input.GetMouseButton(1)) DeleteTiles();
+        //if (Input.GetMouseButton(1)) DeleteTiles();
     }
 
     private void GenerateTiles(int x, int z, float padding, float tileSize, Transform anchor)
@@ -43,7 +43,7 @@ public class SCR_Building : MonoBehaviour
                 currentTile = Instantiate(tilePrefab, spawnPos, tilePrefab.transform.rotation);
                 currentTile.transform.parent = gameObject.transform;
                 tiles.Add(currentTile);
-
+                //builds tile grid outwards from the gameobject the script is attached to
             }
         }
     }

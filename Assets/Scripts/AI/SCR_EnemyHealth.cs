@@ -10,8 +10,7 @@ public class SCR_EnemyHealth : MonoBehaviour
     public float maxHealth;
 
     public GameObject damageTextPrefab;
-    public Color normalDamageColour, critDamageColour;
-    public float textShakeStrength;
+    public Color normalDamageColour, critDamageColour;//different colour for crit damage
 
     private SCR_PlayerWeapon playerWeapon;
 
@@ -42,6 +41,7 @@ public class SCR_EnemyHealth : MonoBehaviour
         newDamageText.LeanMoveY(7.5f, 1f).setEaseInOutExpo();
         newDamageText.GetComponent<TextMeshProUGUI>().text = damageToShow.ToString();
         
+        //instantiate damage text according to current weapon damage stat
 
         if (isCrit)
         {
@@ -49,17 +49,22 @@ public class SCR_EnemyHealth : MonoBehaviour
             newDamageText.GetComponent<TextMeshProUGUI>().color = critDamageColour;
             yield return new WaitForSecondsRealtime(0.5f);
             newDamageText.GetComponent<SCR_ObjectShake>().ShakeObject();
+
+            //change text based on crit info
             
         }
 
         StartCoroutine(TextLookAtPlayer(newDamageText, playerWeapon.directionBearer));
 
+        //text looks at camera
+
         yield return new WaitForSecondsRealtime(1f);
      
         StartCoroutine(UITools._instance.UnscaledDeltaFadeText(newDamageText.GetComponent<TextMeshProUGUI>(), false, 1.1f));
-
+        //fade text
         yield return new WaitForSecondsRealtime(1f);
         Destroy(newDamageText);
+        
     }
 
     public IEnumerator TextLookAtPlayer(GameObject textObj, GameObject objectToLookAt)
@@ -67,7 +72,7 @@ public class SCR_EnemyHealth : MonoBehaviour
 
         for (int i = 0; i < 10000; i++)
         {
-
+            //damage popup text looks at player camera for the duration of its lifetime
             if (textObj != null) textObj.transform.rotation = Quaternion.LookRotation(textObj.transform.position - objectToLookAt.transform.position);
             yield return i;
         }
@@ -79,6 +84,8 @@ public class SCR_EnemyHealth : MonoBehaviour
 
     public IEnumerator CalculateKnockBackAndCritical(float damage)
     {
+        //calulating knockback and critical hit chance for every hit based on weapon type
+
         switch (playerWeapon.currentWeapon.weaponType)
         {
             case WeaponType.dagger:
@@ -133,15 +140,16 @@ public class SCR_EnemyHealth : MonoBehaviour
     public int CritChanceValues(int firstNum, int secondNum)
     {
         return Random.Range(firstNum, secondNum);
+        //returns a random crtical damage number between these two
     }
 
     public bool CritChanceSuccessful(int weaponCritChance)
     {
         int randomChanceNum = Random.Range(0, 100);
 
-        if (weaponCritChance >= randomChanceNum)
-            return true;
+        return true ? weaponCritChance >= randomChanceNum : weaponCritChance < randomChanceNum;
 
-        return false;
+        //returns true if the crit chance passed in is more than the random number it calculates and false if not
+
     }
 }

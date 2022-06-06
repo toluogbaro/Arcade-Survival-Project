@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SCR_WorldWeapon : MonoBehaviour
 {
-    public SCR_BaseWeapon weapon;
+    public SCR_BaseWeapon weapon; // each world weapon has a base weapon scriptable object with stats
     public SCR_PlayerWeapon playerWeapon;
     public GameObject weaponTip;
 
@@ -29,6 +29,8 @@ public class SCR_WorldWeapon : MonoBehaviour
                 playerWeapon.currentWeaponPrefab.transform.localPosition = Vector3.zero;
                 Destroy(gameObject);
 
+                //if there is already a weapon in the players hand destroy it and instantiate new one
+
             }
             else
             {
@@ -46,6 +48,6 @@ public class SCR_WorldWeapon : MonoBehaviour
 
     public void OnApplicationQuit()
     {
-        weapon.durability = weapon.startingDurability;
+        weapon.durability = weapon.startingDurability; //reset weapon durability upon game quit
     }
 }

@@ -33,12 +33,14 @@ public class SCR_DayProgression : MonoBehaviour
     {
         if(dayTimer > 0f && !hasNightTimeStarted)
         {
-            mode = 0;
-            dayTimer -= Time.deltaTime;
+            mode = 0; // mode is a static variable that the enemy scripts can use to determine their state
+            dayTimer -= Time.deltaTime; // slowly reduce day timer
             double dayTimerDouble = System.Math.Round(dayTimer, 2);
             System.TimeSpan timeSpan = System.TimeSpan.FromSeconds(dayTimerDouble);
             stopWatchText.text = new System.DateTime(timeSpan.Ticks).ToString("mm:ss");
-            directionalLight.colorTemperature = dayTimer * 46f;
+
+            //formats time number to be displayed like a stopwath
+            directionalLight.colorTemperature = dayTimer * 46f; //colour temperature of lighting goes down according to timer
         }
 
         if (Input.GetKey(KeyCode.G))
@@ -77,7 +79,7 @@ public class SCR_DayProgression : MonoBehaviour
 
         {
             directionalLight.intensity = i;
-
+            //increases light intensity over time
             yield return null;
         }
 
@@ -113,7 +115,7 @@ public class SCR_DayProgression : MonoBehaviour
 
         {
             directionalLight.intensity = i;
-
+            //increases light intensity over time
             yield return null;
         }
 

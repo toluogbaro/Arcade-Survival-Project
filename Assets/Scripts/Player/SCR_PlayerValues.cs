@@ -13,18 +13,17 @@ public class SCR_PlayerValues : MonoBehaviour
 
     [Header("Sanity")]
 
-    public Volume globalVolume;
+    public Volume globalVolume; // post processing effects
     public float currentSanity = 300f;
     public float maxSanity = 300f;
-    public float trackedSanity;
-    private float sanityReduction;
-    private bool damageCalculation;
+    public float trackedSanity; 
+    private bool damageCalculation; //is damage being calculated?
     public TextMeshProUGUI sanityText;
-    public Image sanityFill;
+    public Image sanityFill; //sanity bar
     public GameObject cameraToShake;
     public GameObject player;
     public AnimationCurve animationCurve;
-    [HideInInspector] public bool isInvincible;
+    [HideInInspector] public bool isInvincible; //is the player invincible?
 
     //postprocessing effects
     private FilmGrain filmGrain;
@@ -37,8 +36,8 @@ public class SCR_PlayerValues : MonoBehaviour
     public float maxStamina = 100f;
     public Image staminaFill;
     public GameObject staminaBar;
-    public float staminaRegenMultiplier;
-    private bool staminaCalculation;
+    public float staminaRegenMultiplier; // multiplied by time to increase stamina regen speed
+    private bool staminaCalculation; //is stamina being calculated?
     private bool fadeStaminaIn;
     private bool fadeStaminaOut;
 
@@ -46,7 +45,8 @@ public class SCR_PlayerValues : MonoBehaviour
 
     public float currentKarma;
     public float maxKarma;
-    public float karmaThreshold;
+    public float karmaThreshold; //the threshold for changing the player over to "the dark side"
+    public static bool isDarkSide;
 
     private void Awake()
     {
@@ -97,6 +97,8 @@ public class SCR_PlayerValues : MonoBehaviour
             trackedSanity -= sanityReduction;
             StartCoroutine(DamageEffect());
             damageCalculation = true;
+            //if the player isnt invincible, like during a dodge or after taking damage, then reduce sanity based on the
+            //passed in number
         }
       
     }
@@ -107,17 +109,26 @@ public class SCR_PlayerValues : MonoBehaviour
         {
             currentSanity -= Time.deltaTime / 10f;
             sanityFill.fillAmount = currentSanity / maxSanity;
+            //if damage isnt being calculated, reduce sanity steadily;
         }
         sanityText.text = Mathf.RoundToInt(currentSanity).ToString();
+        //sanity text = current sanity number rounded to the nearest whole number
     }
 
     public void ConstantStaminaRegen()
     {
         if (!staminaCalculation && currentStamina < maxStamina) currentStamina += (Time.deltaTime * staminaRegenMultiplier);
+        //regen stamina constantly if its less than max
+
         staminaFill.fillAmount = currentStamina / maxStamina;
+        //diving the current stamina by max stamina gives the necessary step to convert whatever number current
+        //stamina is to in between 0 and 1 which is how image fill amounts work
 
         switch (playerController.currentMovementState)
         {
+            //controls stamina based on current movement state. This is efficient because only one state
+            //can exist at once
+
             case Movement.MovementStates.Walk:
                 staminaCalculation = false;
                 StopTakeStamina();
@@ -145,6 +156,8 @@ public class SCR_PlayerValues : MonoBehaviour
         staminaCalculation = true;
 
         currentStamina -= (Time.deltaTime * _staminaMultipler);
+
+        //takes stamina and fades in the bar if it isnt faded in
         
     }
 
@@ -168,6 +181,9 @@ public class SCR_PlayerValues : MonoBehaviour
 
         yield return null;
 
+        //fades the stamina bar in
+        //the use of booleans is just so it doesnt constantly fade in and out in Update()
+
     }
 
     public IEnumerator StopStaminaCalculation()
@@ -183,31 +199,15 @@ public class SCR_PlayerValues : MonoBehaviour
         yield return new WaitForSecondsRealtime(2f);
 
         staminaBar.SetActive(false);
+
+        //fades the stamina bar out
     }
 
     public IEnumerator DamageEffect()
     {
 
-        //FilmGrain grain = default;
-        //ChromaticAberration aberration = default;
 
-        
-       
-        //for(int i = 0; i > globalVolume.profile.components.Count; i++)
-        //{
-        //    if (globalVolume.profile.components[i].name == "FilmGrain")
-        //    {
-        //        grain = (FilmGrain)globalVolume.profile.components[i];
-        //        Debug.Log("found grain");
-        //    }
-
-        //    if (globalVolume.profile.components[i].name == "ChromaticAberration")
-        //    {
-        //        aberration = (ChromaticAberration)globalVolume.profile.components[i];
-        //        Debug.Log("found abberation");
-        //    }
-        //}
-        StartCoroutine(CameraShake(0.5f));
+        StartCoroutine(CameraShake(0.5f)); //shake camera
 
         for (float i = 0; i < 1; i += 0.1f)
 
@@ -215,6 +215,7 @@ public class SCR_PlayerValues : MonoBehaviour
             //volumeFilmGrain.intensity.Override(i);
             filmGrain.intensity.Override(i);
             aberration.intensity.Override(i);
+
             yield return null;
         }
 
@@ -229,7 +230,7 @@ public class SCR_PlayerValues : MonoBehaviour
         }
 
 
-
+        //post processing effects
     }
 
     public void DamageCalculation()
@@ -240,14 +241,17 @@ public class SCR_PlayerValues : MonoBehaviour
     IEnumerator DamageReduction()
 
     {
-        isInvincible = true;
+        isInvincible = true; //player is invincible after being hit
 
         while (currentSanity > trackedSanity)
         {
-            
+            //Apply mesh render fade in and out coroutine
             currentSanity = Mathf.MoveTowards(currentSanity, trackedSanity, Time.deltaTime * 2f);
-            sanityFill.fillAmount = currentSanity / maxSanity;
+            sanityFill.fillAmount = currentSanity / maxSanity; // bar fill moves down
             yield return null;
+
+            //tracked sanity is a float that keeps track of current sanity and damage is taken away from the
+            //current sanity variable when it changes
         }
 
         isInvincible = false;
@@ -260,7 +264,10 @@ public class SCR_PlayerValues : MonoBehaviour
         SCR_CameraMovement.cantMoveCamera = true;
         Movement.SCR_PlayerController.cantMoveCharacter = true;
 
-        Vector3 cameraStartPos = cameraToShake.transform.position;
+        //stops the player and camera from moving while its shaking to avoid the player/camera relationship from
+        //being changed
+
+        Vector3 cameraStartPos = cameraToShake.transform.position; //stores original cam position
         float elapsedTime = 0f;
 
         while (elapsedTime < duration)
@@ -268,11 +275,15 @@ public class SCR_PlayerValues : MonoBehaviour
             elapsedTime += Time.deltaTime;
             float strength = animationCurve.Evaluate(elapsedTime / duration);
             cameraToShake.transform.position = cameraStartPos + Random.insideUnitSphere * strength;
+
+            //camera shake strength is calculated by an animation curve, reduces over time
             yield return null;
         }
 
         cameraToShake.transform.position = cameraStartPos;
         SCR_CameraMovement.cantMoveCamera = false;
         Movement.SCR_PlayerController.cantMoveCharacter = false;
+
+        //camera and player can move again
     }
 }

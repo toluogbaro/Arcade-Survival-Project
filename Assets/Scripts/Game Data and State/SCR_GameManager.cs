@@ -79,6 +79,7 @@ public class SCR_GameManager : MonoBehaviour
 
     public void SetState(GameState gameState)
     {
+        //this function changes the game state
         _gameState = gameState;
         switch (_gameState)
         {

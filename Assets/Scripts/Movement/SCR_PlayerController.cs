@@ -113,6 +113,10 @@ namespace Movement
             if (airTime <= 0f) velocity.y += gravity * Time.deltaTime;
 
             controller.Move(velocity * Time.deltaTime);
+
+            //isGrounded checks if the player is on the ground
+
+            //airtime is the amount of time the player stays in the air before gravity kicks in
         }
 
         public void Dodge()
@@ -172,6 +176,8 @@ namespace Movement
             else if (Input.GetKey(KeyCode.A)) dodgeDirection = 1;
             else if (Input.GetKey(KeyCode.W)) dodgeDirection = 2;
             else if (Input.GetKey(KeyCode.S)) dodgeDirection = 3;
+
+            //caches the direction of the dodge based on the input that happens beforehand
 
             while (t < duration)
             {

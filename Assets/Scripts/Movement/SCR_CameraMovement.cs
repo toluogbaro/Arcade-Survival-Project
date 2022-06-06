@@ -28,16 +28,10 @@ public class SCR_CameraMovement : MonoBehaviour
 
     public static bool cantMoveCamera;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
     void Update()
     {
-        if(!cantMoveCamera)
+        if(!cantMoveCamera)//if cant move camera is true then the camera doesnt move in update
         {
             var targetOrientation = Quaternion.Euler(targetDirection);
             var targetCharacterOrientation = Quaternion.Euler(targetCharacterDirection);
@@ -69,6 +63,8 @@ public class SCR_CameraMovement : MonoBehaviour
                 _mouseAbsolute.x += _smoothMouse.x;
             }
 
+            //if the camera is inverted then it moves in the opposite way
+
 
             if (clampInDegrees.x < 360)
                 _mouseAbsolute.x = Mathf.Clamp(_mouseAbsolute.x, -clampInDegrees.x * 0.5f, clampInDegrees.x * 0.5f);
@@ -90,6 +86,9 @@ public class SCR_CameraMovement : MonoBehaviour
                 var yRotation = Quaternion.AngleAxis(_mouseAbsolute.x, transform.InverseTransformDirection(Vector3.up));
                 transform.localRotation *= yRotation;
             }
+
+            //moves the camera in a circular rotation and adjusts the player characters local rotation based on the camera
+            //position and rotation
         }
         
     }
