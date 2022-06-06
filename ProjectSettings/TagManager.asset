@@ -6,6 +6,7 @@ TagManager:
   tags:
   - PuzzleAnchor
   - PuzzleTile
+  - Global Volume
   layers:
   - Default
   - TransparentFX

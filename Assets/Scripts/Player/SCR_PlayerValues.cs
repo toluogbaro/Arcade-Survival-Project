@@ -57,6 +57,7 @@ public class SCR_PlayerValues : MonoBehaviour
     private void Start()
     {
         playerController = FindObjectOfType<Movement.SCR_PlayerController>();
+        globalVolume = GameObject.FindGameObjectWithTag("Global Volume").GetComponent<Volume>();
         trackedSanity = currentSanity;
         FilmGrain currentFilmGrain;
         ChromaticAberration currentAberration;

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c61907515c9da7047ae3635672b08fbc, type: 3}
+  m_Name: Cooking Pot
+  m_EditorClassIdentifier: 
+  buildingName: Cooking Pot
+  buildingDescription: Cooks Basic Meals
+  width: 1
+  height: 1
+  cost: 2
+  durability: 20
+  ghostPiece: {fileID: 8616644155172156638, guid: 7dd9427f01e63794fa23f9850032d6e1, type: 3}
+  physicalPiece: {fileID: 4896750571632033428, guid: b89d3ff8b293efd4cb300b238604aa4c, type: 3}
