@@ -44,16 +44,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14593ddc3ff8efd41804e81ad4760328, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridZ: 2
-  gridX: 2
+  gridZ: 3
+  gridX: 3
   gridPadding: 0.5
   tileSizeRef: 2
   tilePrefab: {fileID: 1299198299972030616, guid: 5bc2440df15591b4fbc650837e29f920, type: 3}
   puzzleAnchorTrans: {fileID: 7174392609924270763}
   tiles: []
+  puzzleMode: 2
   debugBaseColor: {fileID: 2100000, guid: 0c9971a82a978824ba8d99b181c51255, type: 2}
   debugActiveColor: {fileID: 2100000, guid: abcd6b6f6cc36c94b96e85d62b42098a, type: 2}
   debugFailedColor: {fileID: 2100000, guid: d5f49dc35facb7c4b8d41bb944afed79, type: 2}
   debugSolvedColor: {fileID: 2100000, guid: 0fce8491c09fa5e408f409a6b481a045, type: 2}
+  failThreshhold: 3
   puzzleSolution: 
   puzzleAttempt: 
+  puzzleState: 0

@@ -8,6 +8,7 @@ public class SCR_PuzzleTile : MonoBehaviour
     private MeshRenderer meshRenderer; //reference to attached renderer
     public bool isActive; //bool for status
     public int tileNum; //tile number in puzzle
+    public bool isCorrect = false;
     void Start()
     {
         generator = GetComponentInParent<SCR_PuzzleGenerator>();
@@ -18,18 +19,22 @@ public class SCR_PuzzleTile : MonoBehaviour
     {
         if(collider.tag == "Player")
         {
-            meshRenderer.material = generator.debugActiveColor;
-            isActive = true;
-
-            generator.puzzleAttempt.Add(tileNum);
-            generator.CheckPuzzleState();
+            if(generator.puzzleState != PuzzleState.SOLVED || generator.puzzleState != PuzzleState.FAILED)
+            {
+                isActive = true;
+                if(!isCorrect)
+                {
+                    generator.puzzleAttempt.Add(tileNum);
+                    generator.CheckPuzzleState(gameObject); //print("CHECKING SOLUTION");
+                }
+            }
         }
     }
     void OnTriggerExit(Collider collider)
     {
         if(collider.tag == "Player")
         {
-            meshRenderer.material = generator.debugBaseColor;
+            if(!isCorrect && (generator.puzzleState != PuzzleState.SOLVED || generator.puzzleState != PuzzleState.FAILED)) meshRenderer.material = generator.debugBaseColor;
             isActive = false;
         }
     }
