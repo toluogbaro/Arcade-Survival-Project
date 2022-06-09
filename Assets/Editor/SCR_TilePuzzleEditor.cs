@@ -5,27 +5,28 @@ using UnityEditor;
  public class SCR_TilePuzzleEditor : Editor {
      
     #region PuzzleSettingsFields
-     public SerializedProperty 
-         puzzleType_Prop,
-         sequenceMode_Prop,
-         comparisonMode_Prop,
-         debugBaseColor_Prop,
-         debugActiveColor_Prop,
-         debugFailedColor_Prop,
-         debugSolvedColor_Prop,
-         failThreshhold_Prop,
-         puzzleSolution_Prop, //Can remove once completed
-         puzzleAttempt_Prop; //Can remove once completed         
+    public SerializedProperty 
+        puzzleType_Prop,
+        sequenceMode_Prop,
+        comparisonMode_Prop,
+        debugBaseColor_Prop,
+        debugActiveColor_Prop,
+        debugFailedColor_Prop,
+        debugSolvedColor_Prop,
+        failThreshhold_Prop,
+        comparisonSolutionTrans_Prop,
+        puzzleSolution_Prop, //Can remove once completed
+        puzzleAttempt_Prop; //Can remove once completed
     #endregion
     #region GenerationSettingsFields
-     public SerializedProperty 
-         gridZ_Prop,
-         gridX_Prop,
-         gridPadding_Prop,
-         tileSizeRef_Prop,
-         tilePrefab_Prop,
-         puzzleAnchorTrans_Prop,
-         tiles_Prop; //Can remove once completed
+    public SerializedProperty 
+        gridZ_Prop,
+        gridX_Prop,
+        gridPadding_Prop,
+        tileSizeRef_Prop,
+        tilePrefab_Prop,
+        puzzleAnchorTrans_Prop,
+        tiles_Prop; //Can remove once completed
     #endregion
      
     void OnEnable () {
@@ -41,6 +42,7 @@ using UnityEditor;
         failThreshhold_Prop = serializedObject.FindProperty("failThreshhold");
         puzzleSolution_Prop = serializedObject.FindProperty("puzzleSolution");
         puzzleAttempt_Prop = serializedObject.FindProperty("puzzleAttempt");
+        comparisonSolutionTrans_Prop = serializedObject.FindProperty("comparisonSolutionTrans");
 
         gridZ_Prop = serializedObject.FindProperty("gridZ");
         gridX_Prop = serializedObject.FindProperty("gridX");
@@ -66,14 +68,15 @@ using UnityEditor;
     switch( st ) {
     case SCR_TilePuzzle.PuzzleType.SEQUENCE:
         EditorGUILayout.PropertyField( sequenceMode_Prop, new GUIContent("Puzzle Mode") );
+        EditorGUILayout.PropertyField( failThreshhold_Prop, new GUIContent("Fail Threshold (RESET_AFTER_X)") );
         break;
 
     case SCR_TilePuzzle.PuzzleType.COMPARISON:
         EditorGUILayout.PropertyField( comparisonMode_Prop, new GUIContent("Puzzle Mode") );
+        EditorGUILayout.PropertyField( comparisonSolutionTrans_Prop, new GUIContent("World-Space Solution Spawn Pos"));
         break;    
     }
     //Other puzzle settings
-    EditorGUILayout.PropertyField( failThreshhold_Prop, new GUIContent("Fail Threshold (RESET_AFTER_X)") );
     EditorGUILayout.PropertyField( debugBaseColor_Prop, new GUIContent("Debug Base Color") );
     EditorGUILayout.PropertyField( debugActiveColor_Prop, new GUIContent("Debug Active Color") );
     EditorGUILayout.PropertyField( debugFailedColor_Prop, new GUIContent("Debug Failed Color") );
@@ -90,7 +93,7 @@ using UnityEditor;
     EditorGUILayout.PropertyField( gridPadding_Prop, new GUIContent("Grid Padding") );
     EditorGUILayout.PropertyField( tileSizeRef_Prop, new GUIContent("Tile Size Reference") );
     EditorGUILayout.PropertyField( tilePrefab_Prop, new GUIContent("Tile Prefab") );
-    EditorGUILayout.PropertyField( puzzleAnchorTrans_Prop, new GUIContent("Puzzle Spawn Anchor") );
+    EditorGUILayout.PropertyField( puzzleAnchorTrans_Prop, new GUIContent("Puzzle Spawn Pos") );
     EditorGUILayout.PropertyField( tiles_Prop, new GUIContent("Spawned Tiles List (Debug)") );
 
     serializedObject.ApplyModifiedProperties ();

@@ -7,6 +7,7 @@ using System;
 public class SCR_TilePuzzle : MonoBehaviour
 {
     //Serialized Variables
+    //Generation
     [SerializeField] private int gridZ = 3; //grid size of tiles in Z axis
     [SerializeField] private int gridX = 3; //grid size of tiles in X axis
     [SerializeField] private float gridPadding = 0.5f; //padding between tiles
@@ -15,17 +16,18 @@ public class SCR_TilePuzzle : MonoBehaviour
     [SerializeField] private Transform puzzleAnchorTrans; //transform of puzzle anchor *SUBJECT TO CHANGE
     [SerializeField] private List<GameObject> tiles = new List<GameObject>();
 
-
+    //Puzzle
     public enum PuzzleType{SEQUENCE, COMPARISON};
     public PuzzleType puzzleType;
     public SequenceMode sequenceMode;
     public ComparisonMode comparisonMode;
+    [SerializeField] private Transform comparisonSolutionTrans;
     public Material debugBaseColor;
     public Material debugActiveColor;
     public Material debugFailedColor;
     public Material debugSolvedColor;
     [SerializeField] private int failThreshhold = 3;
-    [SerializeField] private List<int> puzzleSolution= new List<int>();
+    public List<int> puzzleSolution= new List<int>();
 
 
     //Non-Serialized Variables
@@ -58,7 +60,7 @@ public class SCR_TilePuzzle : MonoBehaviour
             for (int loopB = 0; loopB < z; loopB++)
             {
                 zOffset = loopB * (tileSize + padding);
-                spawnPos = new Vector3(xOffset, anchor.position.y, anchor.position.z + zOffset);
+                spawnPos = new Vector3(anchor.position.x + xOffset, anchor.position.y, anchor.position.z + zOffset);
                 currentTile = Instantiate(tile, spawnPos, anchor.rotation);
                 currentTile.transform.parent = gameObject.transform;
                 currentTile.GetComponent<SCR_Tile>().tileNum = tileCounter;
@@ -67,7 +69,31 @@ public class SCR_TilePuzzle : MonoBehaviour
             }
         }
     }
+    private void GenerateComparisonReference(int x, int z, float padding, GameObject tile, float tileSize, Transform anchor)
+    {
+        int tileRefCounter = 0;
+        for (int loopA = 0; loopA < x; loopA++)
+        {
+            xOffset = loopA * (tileSize + padding);
 
+            for (int loopB = 0; loopB < z; loopB++)
+            {
+                zOffset = loopB * (tileSize + padding);
+                spawnPos = new Vector3(anchor.position.x + xOffset, anchor.position.y, anchor.position.z + zOffset);
+                GameObject currentRefTile = Instantiate(tile, spawnPos, anchor.rotation);
+                currentRefTile.GetComponent<SCR_Tile>().tileNum = tileRefCounter;
+                currentRefTile.transform.parent = anchor;
+
+                if(puzzleSolution.Contains(currentRefTile.GetComponent<SCR_Tile>().tileNum))
+                {
+                    currentRefTile.GetComponent<MeshRenderer>().material = debugActiveColor;
+                }
+
+                Destroy(currentRefTile.GetComponent<SCR_Tile>());
+                tileRefCounter++;
+            }
+        }
+    }
     private void GenerateSequencePuzzle()
     {
         int count = 0;
@@ -97,7 +123,25 @@ public class SCR_TilePuzzle : MonoBehaviour
         {
             puzzleSolution.Remove(puzzleSolution.Last());
         }
-    }
+
+        GenerateComparisonReference(gridX, gridZ, gridPadding, tilePrefab, tileSizeRef, comparisonSolutionTrans);
+        comparisonSolutionTrans.rotation = Quaternion.Euler(0,0,90);
+
+        // foreach(Transform child in comparisonSolutionTrans)
+        // {
+        //     if(puzzleSolution.Contains(child.GetComponent<SCR_Tile>().tileNum))
+        //     {
+        //         child.GetComponent<MeshRenderer>().material = debugActiveColor;
+        //         //Destroy(child.GetComponent<SCR_Tile>());
+        //         print("found");
+        //     }
+        //     else
+        //     {
+        //         print("null");
+        //         //Destroy(child.GetComponent<SCR_Tile>());
+        //     }
+        // }
+}
 
     public void CheckPuzzleState(PuzzleType type, GameObject tileCheck)
     {
@@ -108,17 +152,14 @@ public class SCR_TilePuzzle : MonoBehaviour
 
                 for (int i = 0; i < puzzleAttempt.Count; i++)
                 {
-                    //print("CYCLE");
                     if (puzzleAttempt[i] == puzzleSolution[i])
                     {
-                        puzzleState = PuzzleState.OK;
                         tileCheck.GetComponent<MeshRenderer>().material = debugActiveColor;
                         tileCheck.GetComponent<SCR_Tile>().isCorrect = true;
                         if (puzzleAttempt.Last() == puzzleSolution.Last())
                         {
                             failCount = 0;
                         }
-                        //print("OK");
                     }
                     else
                     {
@@ -160,12 +201,11 @@ public class SCR_TilePuzzle : MonoBehaviour
                                 }
                                 failCount = 0;
                             }
-                            //print("FAILED");
                         }
                     }
                 }
 
-                if(puzzleAttempt.Count == puzzleSolution.Count && puzzleState == PuzzleState.OK)
+                if(puzzleAttempt.Count == puzzleSolution.Count)
                     {
                         PuzzleSolved();
                     }
@@ -174,19 +214,15 @@ public class SCR_TilePuzzle : MonoBehaviour
 
             #region COMPARISON CASE
             case PuzzleType.COMPARISON:
-                foreach (int solutionTile in puzzleSolution)
+                if (puzzleSolution.Contains(tileCheck.GetComponent<SCR_Tile>().tileNum))
                 {
-                    if (puzzleAttempt.Last() == solutionTile)
-                    {
-                        puzzleState = PuzzleState.OK;
-                        tileCheck.GetComponent<MeshRenderer>().material = debugActiveColor;
-                        tileCheck.GetComponent<SCR_Tile>().isCorrect = true;
-                    }
-                    else
-                    {
-                        puzzleState = PuzzleState.INCORRECT;
-                        tileCheck.GetComponent<MeshRenderer>().material = debugActiveColor;
-                    }
+                    tileCheck.GetComponent<MeshRenderer>().material = debugActiveColor;
+                    tileCheck.GetComponent<SCR_Tile>().isCorrect = true;
+                }
+                else
+                {
+                    tileCheck.GetComponent<MeshRenderer>().material = debugActiveColor;
+                    tileCheck.GetComponent<SCR_Tile>().isCorrect = false;
                 }
 
                 if (IsComparisonComplete())
@@ -221,7 +257,7 @@ public class SCR_TilePuzzle : MonoBehaviour
                 count++;
         }
 
-        if (count == puzzleSolution.Count && puzzleState == PuzzleState.OK && puzzleAttempt.Count == puzzleSolution.Count)
+        if (count == puzzleSolution.Count && puzzleAttempt.Count == puzzleSolution.Count)
             return true;
         else
             return false;
@@ -250,8 +286,6 @@ public class SCR_TilePuzzle : MonoBehaviour
 public enum PuzzleState
 {
     NULL,
-    OK,
-    INCORRECT,
     FAILED,
     SOLVED
 }

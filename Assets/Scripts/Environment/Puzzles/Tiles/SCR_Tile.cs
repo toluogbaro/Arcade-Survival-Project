@@ -38,40 +38,30 @@ public class SCR_Tile : MonoBehaviour
             {
                 if(isActive)
                 {
-                    if(!isCorrect)
+                    isActive = false;
+                    meshRenderer.material = generator.debugBaseColor;
+                    generator.puzzleAttempt.Remove(tileNum);
+                    if(!generator.puzzleSolution.Contains(tileNum))
                     {
-                        generator.puzzleState = PuzzleState.OK;
-                        isActive = false;
-                        meshRenderer.material = generator.debugBaseColor;
-
-                        foreach (int value in generator.puzzleAttempt)
-                        {
-                            if (value == tileNum)
-                                generator.puzzleAttempt.Remove(value);
-                                print("Removed");
-                                break;
-                        }
-
-                        if(generator.IsComparisonComplete())
-                        {
-                            generator.PuzzleSolved();
-                        }
+                        isCorrect = true;
                     }
+                    
+                    if(generator.IsComparisonComplete())
+                        generator.PuzzleSolved();
+
                 }
                 else
                 {
                     if(generator.puzzleState != PuzzleState.SOLVED || generator.puzzleState != PuzzleState.FAILED)
                     {
                         isActive = true;
-                        if(!isCorrect && !generator.puzzleAttempt.Contains(tileNum))
-                        {
+                        if(!generator.puzzleAttempt.Contains(tileNum))
                             generator.puzzleAttempt.Add(tileNum);
-                            generator.CheckPuzzleState(SCR_TilePuzzle.PuzzleType.COMPARISON, gameObject); //print("CHECKING SOLUTION");
-                        }
+                        generator.CheckPuzzleState(SCR_TilePuzzle.PuzzleType.COMPARISON, gameObject);
                     }
                 }
             }
-            #endregion           
+            #endregion
         }
     }
     void OnTriggerExit(Collider collider)

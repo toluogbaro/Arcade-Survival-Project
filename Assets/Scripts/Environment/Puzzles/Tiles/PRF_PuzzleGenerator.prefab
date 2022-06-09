@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &277178236301302285
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2289417957470059962}
+  m_Layer: 0
+  m_Name: ComparisonSolution
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2289417957470059962
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 277178236301302285}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7174392609924270763}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1961834268591586815
 GameObject:
   m_ObjectHideFlags: 0
@@ -28,7 +59,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 2289417957470059962}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -51,7 +83,10 @@ MonoBehaviour:
   tilePrefab: {fileID: 1299198299972030616, guid: 5bc2440df15591b4fbc650837e29f920, type: 3}
   puzzleAnchorTrans: {fileID: 7174392609924270763}
   tiles: []
-  puzzleMode: 2
+  puzzleType: 1
+  sequenceMode: 0
+  comparisonMode: 0
+  comparisonSolutionTrans: {fileID: 2289417957470059962}
   debugBaseColor: {fileID: 2100000, guid: 0c9971a82a978824ba8d99b181c51255, type: 2}
   debugActiveColor: {fileID: 2100000, guid: abcd6b6f6cc36c94b96e85d62b42098a, type: 2}
   debugFailedColor: {fileID: 2100000, guid: d5f49dc35facb7c4b8d41bb944afed79, type: 2}
