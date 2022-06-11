@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 4867468085229842997}
   - component: {fileID: 2787507481119074651}
   - component: {fileID: 7183903413869649648}
-  - component: {fileID: 4245784468109842695}
+  - component: {fileID: 4138951164581246509}
   m_Layer: 3
-  m_Name: PRF_PuzzleTile
+  m_Name: PRF_SequencePuzzleTile
   m_TagString: PuzzleTile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -112,7 +112,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4245784468109842695
+--- !u!114 &4138951164581246509
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -121,8 +121,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1299198299972030616}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a9df465a5b943a4ca8e2f740f7317ad, type: 3}
+  m_Script: {fileID: 11500000, guid: f3a89deb1a291c240994c536a06bcfce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isActive: 0
   tileNum: 0
+  isCorrect: 0

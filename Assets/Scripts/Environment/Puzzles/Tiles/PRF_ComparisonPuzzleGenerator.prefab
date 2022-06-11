@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 277178236301302285}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 10, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -40,9 +40,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7174392609924270763}
-  - component: {fileID: 7660039508816697247}
+  - component: {fileID: 478960234114895113}
   m_Layer: 0
-  m_Name: PRF_PuzzleGenerator
+  m_Name: PRF_ComparisonPuzzleGenerator
   m_TagString: PuzzleAnchor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -64,7 +64,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7660039508816697247
+--- !u!114 &478960234114895113
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -73,7 +73,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1961834268591586815}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14593ddc3ff8efd41804e81ad4760328, type: 3}
+  m_Script: {fileID: 11500000, guid: e58c08d143922b74b9c9a8edaf289b31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   gridZ: 3
@@ -83,15 +83,15 @@ MonoBehaviour:
   tilePrefab: {fileID: 1299198299972030616, guid: 5bc2440df15591b4fbc650837e29f920, type: 3}
   puzzleAnchorTrans: {fileID: 7174392609924270763}
   tiles: []
-  puzzleType: 1
-  sequenceMode: 0
-  comparisonMode: 0
-  comparisonSolutionTrans: {fileID: 2289417957470059962}
   debugBaseColor: {fileID: 2100000, guid: 0c9971a82a978824ba8d99b181c51255, type: 2}
   debugActiveColor: {fileID: 2100000, guid: abcd6b6f6cc36c94b96e85d62b42098a, type: 2}
   debugFailedColor: {fileID: 2100000, guid: d5f49dc35facb7c4b8d41bb944afed79, type: 2}
   debugSolvedColor: {fileID: 2100000, guid: 0fce8491c09fa5e408f409a6b481a045, type: 2}
-  failThreshhold: 3
   puzzleSolution: 
+  currentTile: {fileID: 0}
+  tileCounter: 0
   puzzleAttempt: 
   puzzleState: 0
+  puzzleInterfaces: []
+  comparisonMode: 0
+  comparisonSolutionTrans: {fileID: 2289417957470059962}
