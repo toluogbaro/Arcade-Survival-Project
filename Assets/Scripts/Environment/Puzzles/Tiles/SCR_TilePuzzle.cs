@@ -8,27 +8,29 @@ public abstract class SCR_TilePuzzle : MonoBehaviour
 {
     //Serialized Variables
     //Generation
+    [Header("Generation Settings")]
     [SerializeField] protected int gridZ = 3; //grid size of tiles in Z axis
     [SerializeField] protected int gridX = 3; //grid size of tiles in X axis
     [SerializeField] protected float gridPadding = 0.5f; //padding between tiles
     [SerializeField] protected float tileSizeRef = 2f; //reference for the size of the puzzle tile
     [SerializeField] protected GameObject tilePrefab; //prefab of puzzle tile
     [SerializeField] protected Transform puzzleAnchorTrans; //transform of puzzle anchor *SUBJECT TO CHANGE
-    [SerializeField] protected List<GameObject> tiles = new List<GameObject>();
+    protected List<GameObject> tiles = new List<GameObject>();
     protected float xOffset = 0f; //spawn offset for X axis
     protected float zOffset = 0f; //spawn offset for Z axis
     protected Vector3 spawnPos = Vector3.zero; //reference for the current spawn position
 
     //Puzzle
+    [Header("Puzzle Settings")]
     public Material debugBaseColor;
     public Material debugActiveColor;
     public Material debugFailedColor;
     public Material debugSolvedColor;
     public List<int> puzzleSolution = new List<int>();
-    [SerializeField] protected GameObject currentTile; //reference to current tile in generation
-    [SerializeField] protected int tileCounter = 0;
-    public List<int> puzzleAttempt = new List<int>();
-    public PuzzleState puzzleState;
+    protected GameObject currentTile; //reference to current tile in generation
+    protected int tileCounter = 0;
+    [HideInInspector] public List<int> puzzleAttempt = new List<int>();
+    [HideInInspector] public PuzzleState puzzleState;
     [SerializeField] private GameObject[] puzzleInterfaces;
 
     // Start is called before the first frame update

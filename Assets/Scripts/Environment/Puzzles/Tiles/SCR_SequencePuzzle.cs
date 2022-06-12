@@ -7,7 +7,7 @@ using System;
 public class SCR_SequencePuzzle : SCR_TilePuzzle
 {
     public SequenceMode sequenceMode;
-    [SerializeField] private int failCount = 0;
+    private int failCount = 0;
     [SerializeField] private int failThreshhold = 3;
     protected override void GeneratePuzzle()
     {
