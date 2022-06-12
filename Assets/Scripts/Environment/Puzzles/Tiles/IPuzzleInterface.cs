@@ -5,4 +5,8 @@ using UnityEngine;
 public interface IPuzzleInterface
 {
     public void PuzzleComplete();
+    public void InvokeAllMethods()
+    {
+        PuzzleComplete();
+    }
 }

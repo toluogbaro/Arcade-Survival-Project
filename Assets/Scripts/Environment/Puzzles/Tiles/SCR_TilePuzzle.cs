@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System;
+using System.Reflection;
 
 public abstract class SCR_TilePuzzle : MonoBehaviour
 {
@@ -77,7 +78,7 @@ public abstract class SCR_TilePuzzle : MonoBehaviour
         foreach (GameObject puzzleInterface in puzzleInterfaces)
         {
             if(puzzleInterface.GetComponent<IPuzzleInterface>() != null)
-                puzzleInterface.GetComponent<IPuzzleInterface>().PuzzleComplete();
+                puzzleInterface.GetComponent<IPuzzleInterface>().InvokeAllMethods();
         }
     }
 
