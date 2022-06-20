@@ -33,6 +33,7 @@ public abstract class SCR_TilePuzzle : MonoBehaviour
     [HideInInspector] public List<int> puzzleAttempt = new List<int>();
     [HideInInspector] public PuzzleState puzzleState;
     [SerializeField] private GameObject[] puzzleInterfaces;
+    public bool destroyOnSolve = false;
 
     // Start is called before the first frame update
     void Start()
@@ -80,6 +81,7 @@ public abstract class SCR_TilePuzzle : MonoBehaviour
             if(puzzleInterface.GetComponent<IPuzzleInterface>() != null)
                 puzzleInterface.GetComponent<IPuzzleInterface>().InvokeAllMethods();
         }
+        if(destroyOnSolve) Destroy(gameObject);
     }
 
     public bool IsComparisonComplete()
