@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 5f39a50f40f3a384980d6fdb9765256c
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: dda12f74ff9116a42b23482252b2c482, type: 3}
+  _instancesCopy:
+  - {fileID: 11400000, guid: ed014380920a9e245ad75a6c9bf5a5db, type: 2}
+  _fileAsset: {instanceID: 0}
+  _assetPath: Assets/Materials/Terrain/Sand/Sand.sbsar
