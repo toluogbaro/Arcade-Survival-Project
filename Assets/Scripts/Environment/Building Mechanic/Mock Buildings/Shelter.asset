@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c61907515c9da7047ae3635672b08fbc, type: 3}
+  m_Name: Shelter
+  m_EditorClassIdentifier: 
+  buildingName: Shelter
+  buildingDescription: Flimsy little shelter that wont stand rain
+  width: 2
+  height: 2
+  cost: 5
+  durability: 100
+  ghostPiece: {fileID: 4626526907360304207, guid: 781ca206359a05d42ba6c723616aa2f9, type: 3}
+  physicalPiece: {fileID: 4418492364518978509, guid: b43813708fb567a469c79023e721bd3f, type: 3}

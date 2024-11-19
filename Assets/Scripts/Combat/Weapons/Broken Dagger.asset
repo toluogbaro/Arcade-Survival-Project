@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2e84c9e7d81a6d4ab10dd20d17c9998, type: 3}
+  m_Name: Broken Dagger
+  m_EditorClassIdentifier: 
+  lightDamage: 1
+  heavyDamage: 2
+  durability: 99995
+  startingDurability: 100000
+  lightFireRate: 0.25
+  heavyFireRate: 1
+  range: 0.25
+  weaponType: 0
+  description: Cracked and broken, this lone dagger is useful for nothing but some
+    are desperate enough to put their trust into it.
+  weaponPrefab: {fileID: 1685959165487458433, guid: debd3dd58edf627409824f789a6c8d14, type: 3}

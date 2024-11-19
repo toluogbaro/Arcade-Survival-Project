@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 694817880fc7bdc4b87923814944499f, type: 3}
+  m_Name: Broken Spear
+  m_EditorClassIdentifier: 
+  lightDamage: 2
+  heavyDamage: 4
+  durability: 100000
+  startingDurability: 100000
+  lightFireRate: 1
+  heavyFireRate: 2
+  range: 1.1
+  criticalHitChance: 20
+  weaponType: 1
+  description: A spear broken like no other, close to shattering and yet more comforting
+    than a flimsy dagger
+  weaponPrefab: {fileID: 5108113581336717181, guid: c30ae6b4cf2e1ef4b8f64edc39bd6fd8, type: 3}
